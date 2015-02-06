@@ -12,7 +12,7 @@ import static java.util.Date.from;
 public class DateConverter implements AttributeConverter<ZonedDateTime, Date> {
     @Override
     public Date convertToDatabaseColumn(ZonedDateTime attribute) {
-        return Date.from(attribute.toInstant().atZone(UTC).toInstant());
+        return from(attribute.toInstant().atZone(UTC).toInstant());
     }
 
     @Override
