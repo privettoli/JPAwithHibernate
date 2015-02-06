@@ -1,0 +1,47 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'application'
+apply plugin: "sonar-runner"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+mainClassName = 'learning.jpa.with.hibernate.Application'
+version = '0.1.0'
+
+test {
+    // listen to events in the test execution lifecycle
+    beforeTest { descriptor ->
+        logger.lifecycle("Running: " + descriptor)
+    }
+
+    // listen to standard out and standard error of the test JVM(s)
+    onOutput { descriptor, event ->
+        logger.lifecycle("" + descriptor + ": " + event.message)
+    }
+}
+
+dependencies {
+    compile("com.fasterxml.jackson.core:jackson-databind:2.4.3")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.2.0.BUILD-SNAPSHOT")
+    compile("org.springframework.boot:spring-boot-starter-web:1.2.0.M2")
+    compile("org.projectlombok:lombok:1.14.8")
+    compile("org.hibernate:hibernate-core:4.3.4.Final")
+    compile("org.mariadb.jdbc:mariadb-java-client:1.1.7")
+    testCompile("org.springframework.boot:spring-boot-starter-test:1.2.0.BUILD-SNAPSHOT")
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.0.BUILD-SNAPSHOT")
+    }
+}
