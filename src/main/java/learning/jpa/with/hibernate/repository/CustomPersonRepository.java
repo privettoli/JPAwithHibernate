@@ -20,6 +20,6 @@ public class CustomPersonRepository {
     }
 
     public void save(List<Person> persons) {
-        persons.parallelStream().forEach(entityManager::persist);
+        persons.stream().forEach(entityManager::persist);
     }
 }
